@@ -3,7 +3,7 @@
 //  GraphTutorial
 //
 //  Copyright (c) Microsoft. All rights reserved.
-//  Licensed under the MIT license. See LICENSE.txt in the project root for license information.
+//  Licensed under the MIT license.
 //
 
 // <AuthManagerSnippet>
@@ -46,14 +46,19 @@
     return self;
 }
 
-- (void) getAccessTokenForProviderOptions:(id<MSAuthenticationProviderOptions>)authProviderOptions andCompletion:(void (^)(NSString * _Nonnull, NSError * _Nonnull))completion {
+- (void) getAccessTokenForProviderOptions:(id<MSAuthenticationProviderOptions>) authProviderOptions
+                            andCompletion:(void (^)(NSString * _Nonnull, NSError * _Nonnull)) completion {
     [self getTokenSilentlyWithCompletionBlock:completion];
 }
 
-- (void) getTokenInteractivelyWithParentView:(UIViewController *)parentView andCompletionBlock:(GetTokenCompletionBlock)completionBlock {
-    MSALWebviewParameters* webParameters = [[MSALWebviewParameters alloc] initWithParentViewController:parentView];
+- (void) getTokenInteractivelyWithParentView:(UIViewController *) parentView
+                          andCompletionBlock:(GetTokenCompletionBlock) completionBlock {
+    MSALWebviewParameters* webParameters = [[MSALWebviewParameters alloc]
+                                            initWithAuthPresentationViewController:parentView];
     MSALInteractiveTokenParameters* interactiveParameters =
-    [[MSALInteractiveTokenParameters alloc]initWithScopes:self.graphScopes webviewParameters:webParameters];
+    [[MSALInteractiveTokenParameters alloc]
+     initWithScopes:self.graphScopes
+     webviewParameters:webParameters];
 
     // Call acquireToken to open a browser so the user can sign in
     [self.publicClient
